@@ -42,7 +42,7 @@ own config files / sections. In here I have created a class called `Bootstrapper
 
 ```JavaScript
 {
-  "ToDoApiConfig": {
+  "ToDoApi": {
     "Url": "some url"
   }
 }
