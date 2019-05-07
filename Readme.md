@@ -29,3 +29,5 @@ But just by executing the command above the windows service will not work. If yo
 > Reference - [Read the `boekabart` comment on this](https://github.com/Topshelf/Topshelf/issues/485)
 
 
+## Dependency Injection
+
