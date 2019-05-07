@@ -19,7 +19,7 @@ namespace ProcessInvoiceService
             // Register the dependencies here
             //
             var configuration = GetConfiguration();
-            services.Configure<ToDoApiConfig>(configuration.GetSection("ToDoApiConfig"));
+            services.Configure<ToDoApiConfig>(configuration.GetSection("ToDoApi"));
             services.AddSingleton(provider =>
             {
                 var apiConfig = provider.GetRequiredService<IOptions<ToDoApiConfig>>().Value;
