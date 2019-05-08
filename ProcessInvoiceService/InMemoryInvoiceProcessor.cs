@@ -2,15 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Quartz;
 
 namespace ProcessInvoiceService
 {
-    public class InMemoryInvoiceProcessor : IInvoiceProcessor
+    public class InMemoryInvoiceProcessor : IInvoiceProcessor, IJob
     {
+        private readonly ITodoApiClient _client;
         private List<ToDo> _todos;
 
-        public InMemoryInvoiceProcessor()
+        public InMemoryInvoiceProcessor(ITodoApiClient client)
         {
+            _client = client;
             _todos = new List<ToDo>();
         }
 
@@ -31,7 +34,7 @@ namespace ProcessInvoiceService
             return upsertedItems;
         }
 
-        public Task<ToDo> UpsertTodoAsync(ToDo item)
+        private Task<ToDo> UpsertTodoAsync(ToDo item)
         {
             if (item == null)
             {
@@ -49,6 +52,17 @@ namespace ProcessInvoiceService
             }
 
             return Task.FromResult(item);
+        }
+
+        public async Task Execute(IJobExecutionContext context)
+        {
+            var todoItems = await _client.GetTodosAsync();
+            if (todoItems == null || !todoItems.Any())
+            {
+                return;
+            }
+
+            await UpsertTodosAsync(todoItems.ToArray());
         }
     }
 }

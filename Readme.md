@@ -87,3 +87,8 @@ services.AddTransient<IInvoiceProcessor, InMemoryInvoiceProcessor>();
 
 > __`IServiceCollection.AddHttpClient`__ extension method is coming from the __`Microsoft.Extensions.Http`__ nuget library. In this application it's required because it has a typed HTTP client to communicate with the external web API.
 
+
+## Scheduling the service
+
+For this we are going to use `Quartz`. 
+

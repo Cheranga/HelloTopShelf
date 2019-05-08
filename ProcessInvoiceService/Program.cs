@@ -24,7 +24,7 @@ namespace ProcessInvoiceService
                     var apiClient = provider.GetRequiredService<ITodoApiClient>();
                     var processor = provider.GetRequiredService<IInvoiceProcessor>();
 
-                    serviceConfigurator.ConstructUsing(() => new InvoiceService(apiClient, processor));
+                    serviceConfigurator.ConstructUsing(() => new InvoiceService(processor));
 
                     serviceConfigurator.WhenStarted(service => service.OnStart());
                     serviceConfigurator.WhenStopped(service => service.OnStop());
