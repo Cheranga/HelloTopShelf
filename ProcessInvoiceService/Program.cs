@@ -14,18 +14,17 @@ namespace ProcessInvoiceService
 
             HostFactory.Run(configurator =>
             {
-                configurator.SetServiceName("ProcessInvoices");
+                configurator.SetServiceName("ProcessInvoice");
                 configurator.SetDisplayName("Process Invoices");
                 configurator.SetDescription("This will process the invoices");
 
                 configurator.RunAsLocalSystem();
 
-                configurator.Service<InvoiceService>(serviceConfigurator =>
+                configurator.Service<ProcessInvoiceService>(serviceConfigurator =>
                 {
-                    var processor = provider.GetRequiredService<IInvoiceProcessor>();
                     var jobFactory = provider.GetRequiredService<IJobFactory>();
 
-                    serviceConfigurator.ConstructUsing(() => new InvoiceService(jobFactory));
+                    serviceConfigurator.ConstructUsing(() => new ProcessInvoiceService(jobFactory));
 
                     serviceConfigurator.WhenStarted(service => service.OnStart());
                     serviceConfigurator.WhenStopped(service => service.OnStop());

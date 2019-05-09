@@ -4,12 +4,12 @@ using Quartz.Spi;
 
 namespace ProcessInvoiceService
 {
-    public class InvoiceService
+    public class ProcessInvoiceService
     {
         private readonly IJobFactory _jobFactory;
         private IScheduler _scheduler;
 
-        public InvoiceService(IJobFactory jobFactory)
+        public ProcessInvoiceService(IJobFactory jobFactory)
         {
             _jobFactory = jobFactory;
         }

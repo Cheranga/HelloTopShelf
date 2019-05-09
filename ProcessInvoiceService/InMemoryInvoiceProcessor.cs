@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using Quartz;
 
 namespace ProcessInvoiceService
@@ -46,7 +48,19 @@ namespace ProcessInvoiceService
                 return;
             }
 
-            await UpsertTodosAsync(todoItems.ToArray());
+            var todos = await UpsertTodosAsync(todoItems.ToArray());
+
+            using (var fileStream = new FileStream(@"D:/cheranga/Todos.json", FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
+            {
+                using (var writer = new StreamWriter(fileStream) { AutoFlush = true })
+                {
+                    foreach (var item in todos)
+                    {
+                        var message = JsonConvert.SerializeObject(item);
+                        await writer.WriteLineAsync(message).ConfigureAwait(false);
+                    }
+                }
+            }
         }
 
         private Task<ToDo> UpsertTodoAsync(ToDo item)
@@ -65,6 +79,8 @@ namespace ProcessInvoiceService
             {
                 _todos.Add(item);
             }
+
+
 
             return Task.FromResult(item);
         }
