@@ -3,6 +3,7 @@ using System.IO;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using Quartz.Spi;
 
 namespace ProcessInvoiceService
 {
@@ -25,6 +26,16 @@ namespace ProcessInvoiceService
                 var apiConfig = provider.GetRequiredService<IOptions<ToDoApiConfig>>().Value;
                 return apiConfig;
             });
+
+            services.InitializeJobs(typeof(Bootstrapper).Assembly);
+
+            //services.AddSingleton<IJobFactory>(provider =>
+            //{
+            //    var jobFactory = new JobFactory(provider);
+            //    return jobFactory;
+            //});
+
+            //services.AddSingleton<InMemoryInvoiceProcessor>();
 
             services.AddHttpClient<ITodoApiClient, TodoApiClient>();
             services.AddTransient<IInvoiceProcessor, InMemoryInvoiceProcessor>();

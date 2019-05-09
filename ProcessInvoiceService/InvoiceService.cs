@@ -1,23 +1,38 @@
 ﻿using Quartz;
 using Quartz.Impl;
+using Quartz.Spi;
 
 namespace ProcessInvoiceService
 {
     public class InvoiceService
     {
-        private readonly IInvoiceProcessor _invoiceProcessor;
+        private readonly IJobFactory _jobFactory;
+        private IScheduler _scheduler;
 
-        public InvoiceService(IInvoiceProcessor invoiceProcessor)
+        public InvoiceService(IJobFactory jobFactory)
         {
-            _invoiceProcessor = invoiceProcessor;
+            _jobFactory = jobFactory;
         }
 
         public void OnStart()
         {
+            var schedulerFactory = new StdSchedulerFactory();
+            _scheduler = schedulerFactory.GetScheduler().Result;
+            _scheduler.JobFactory = _jobFactory;
+            _scheduler.Start().Wait();
+
+            //var voteJob = JobBuilder.Create<VoteJob>()
+            //    .Build();
             var jobDetails = JobBuilder.Create<InMemoryInvoiceProcessor>()
                 .WithIdentity(JobKey.Create("Invoice processing", "Document processing"))
                 .Build();
 
+            //var voteJobTrigger = TriggerBuilder.Create()
+            //    .StartNow()
+            //    .WithSimpleSchedule(s => s
+            //        .WithIntervalInSeconds(60)
+            //        .RepeatForever())
+            //    .Build();
             var trigger = TriggerBuilder.Create()
                 .WithIdentity(new TriggerKey("Create or update invoices", "Document processing"))
                 .StartNow()
@@ -28,18 +43,31 @@ namespace ProcessInvoiceService
                 })
                 .Build();
 
-            var scheduler = new StdSchedulerFactory().GetScheduler().Result;
-            var offset = scheduler.ScheduleJob(jobDetails, trigger).Result;
+            _scheduler.ScheduleJob(jobDetails, trigger).Wait();
 
-            scheduler.Start().Wait();
 
+            //var jobDetails = JobBuilder.Create<InMemoryInvoiceProcessor>()
+            //    .WithIdentity(JobKey.Create("Invoice processing", "Document processing"))
+            //    .Build();
+
+            //var trigger = TriggerBuilder.Create()
+            //    .WithIdentity(new TriggerKey("Create or update invoices", "Document processing"))
+            //    .StartNow()
+            //    .WithSimpleSchedule(builder =>
+            //    {
+            //        builder.WithIntervalInSeconds(2)
+            //            .RepeatForever();
+            //    })
+            //    .Build();
+
+            //var scheduler = new StdSchedulerFactory().GetScheduler().Result;
+            //var offset = scheduler.ScheduleJob(jobDetails, trigger).Result;
+
+            //scheduler.Start().Wait();
         }
 
         public void OnStop()
         {
-
         }
     }
-
-
 }

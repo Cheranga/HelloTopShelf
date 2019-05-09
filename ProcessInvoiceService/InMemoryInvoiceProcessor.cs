@@ -9,7 +9,7 @@ namespace ProcessInvoiceService
     public class InMemoryInvoiceProcessor : IInvoiceProcessor, IJob
     {
         private readonly ITodoApiClient _client;
-        private List<ToDo> _todos;
+        private readonly List<ToDo> _todos;
 
         public InMemoryInvoiceProcessor(ITodoApiClient client)
         {
@@ -34,6 +34,21 @@ namespace ProcessInvoiceService
             return upsertedItems;
         }
 
+        public void Dispose()
+        {
+        }
+
+        public async Task Execute(IJobExecutionContext context)
+        {
+            var todoItems = await _client.GetTodosAsync();
+            if (todoItems == null || !todoItems.Any())
+            {
+                return;
+            }
+
+            await UpsertTodosAsync(todoItems.ToArray());
+        }
+
         private Task<ToDo> UpsertTodoAsync(ToDo item)
         {
             if (item == null)
@@ -52,17 +67,6 @@ namespace ProcessInvoiceService
             }
 
             return Task.FromResult(item);
-        }
-
-        public async Task Execute(IJobExecutionContext context)
-        {
-            var todoItems = await _client.GetTodosAsync();
-            if (todoItems == null || !todoItems.Any())
-            {
-                return;
-            }
-
-            await UpsertTodosAsync(todoItems.ToArray());
         }
     }
 }

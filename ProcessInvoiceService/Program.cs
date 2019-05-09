@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Quartz.Spi;
 using Topshelf;
 
 namespace ProcessInvoiceService
@@ -21,10 +22,10 @@ namespace ProcessInvoiceService
 
                 configurator.Service<InvoiceService>(serviceConfigurator =>
                 {
-                    var apiClient = provider.GetRequiredService<ITodoApiClient>();
                     var processor = provider.GetRequiredService<IInvoiceProcessor>();
+                    var jobFactory = provider.GetRequiredService<IJobFactory>();
 
-                    serviceConfigurator.ConstructUsing(() => new InvoiceService(processor));
+                    serviceConfigurator.ConstructUsing(() => new InvoiceService(jobFactory));
 
                     serviceConfigurator.WhenStarted(service => service.OnStart());
                     serviceConfigurator.WhenStopped(service => service.OnStop());
