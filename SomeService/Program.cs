@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices.ComTypes;
+using Microsoft.Extensions.DependencyInjection;
 using Topshelf;
 
 namespace SomeService
@@ -8,6 +9,12 @@ namespace SomeService
     {
         static void Main(string[] args)
         {
+            var services = new ServiceCollection();
+            services.AddHttpClient<ITodoApiClient, TodoApiClient>();
+
+            var serviceProvider = services.BuildServiceProvider();
+
+
             HostFactory.Run(configurator =>
             {
                 configurator.SetServiceName("SomeService");
@@ -18,7 +25,8 @@ namespace SomeService
 
                 configurator.Service<InvoiceService>(serviceConfigurator =>
                 {
-                    serviceConfigurator.ConstructUsing(() => new InvoiceService());
+                    var client = serviceProvider.GetRequiredService<ITodoApiClient>();
+                    serviceConfigurator.ConstructUsing(() => new InvoiceService(client));
 
                     serviceConfigurator.WhenStarted((service, hostControl) =>
                     {
