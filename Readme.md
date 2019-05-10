@@ -90,5 +90,21 @@ services.AddTransient<IInvoiceProcessor, InMemoryInvoiceProcessor>();
 
 ## Scheduling the service
 
-For this we are going to use `Quartz`. 
+For this we are going to use `Quartz`.
+
+In `Quartz` terms, what we implement are `jobs`. These jobs are the little minions which actually gets executed in a scheduled fashion through `Quartz`.
+
+But remember we use DI here and, we want the Quartz related code to follow the same practices.
+
+These are the main points which we need to consider when using `Quartz` to be crafted to our solution.
+
+* Any job which you want to schedule through `Quartz` must implement their `IJob` interface.
+* In `Quartz` the jobs are created through a factory class which implements `IJobFactory`. So in here we'll implement a custom job factory, which will use the `IServiceProvider` instance to create the job as requested.
+* The jobs are scheduled through a job scheduler factory which implements `ISchedulerFactory`. `Quartz` already have a default implementation of it which is called `StdSchedulerFactory` and, that's the one which we'll be using as our scheduler.
+* Using `Quartz` you can create different types of triggers. Simple triggers such as executing in a specific interval to something a bit more complex which could be represented by a `CRON` expression. In here we are using a simple trigger.
+* Refer the `Bootstrapper` class to refer how the dependencies are registered.
+
+
+
+
 
