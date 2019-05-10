@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Quartz;
 using Quartz.Spi;
 
-namespace SomeService
+namespace InvoiceProcessingService
 {
     public class JobFactory : IJobFactory
     {

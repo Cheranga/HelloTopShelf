@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Quartz;
 
-namespace SomeService
+namespace InvoiceProcessingService
 {
     public class InvoiceProcessingJob : IJob
     {

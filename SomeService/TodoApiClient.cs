@@ -4,7 +4,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace SomeService
+namespace InvoiceProcessingService
 {
     public class TodoApiClient : ITodoApiClient
     {

@@ -12,7 +12,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProcessInvoiceService", "Pr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuartzConsole", "QuartzConsole\QuartzConsole.csproj", "{677E4616-C23C-410E-8EA7-5B7AEE886E89}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SomeService", "SomeService\SomeService.csproj", "{E85F201A-888C-4BAB-BDA8-2C62A7C0B6B2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvoiceProcessingService", "SomeService\InvoiceProcessingService.csproj", "{E85F201A-888C-4BAB-BDA8-2C62A7C0B6B2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

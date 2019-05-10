@@ -3,7 +3,7 @@ using Quartz;
 using Quartz.Impl;
 using Quartz.Spi;
 
-namespace SomeService
+namespace InvoiceProcessingService
 {
     public class InvoiceService
     {

@@ -2,7 +2,7 @@
 using Quartz.Spi;
 using Topshelf;
 
-namespace SomeService
+namespace InvoiceProcessingService
 {
     internal class Program
     {
@@ -15,9 +15,9 @@ namespace SomeService
 
             HostFactory.Run(configurator =>
             {
-                configurator.SetServiceName("SomeService");
-                configurator.SetDisplayName("SomeService");
-                configurator.SetDescription("SomeService");
+                configurator.SetServiceName("InvoiceProcessingService");
+                configurator.SetDisplayName("InvoiceProcessingService");
+                configurator.SetDescription("InvoiceProcessingService");
 
                 configurator.RunAsLocalSystem();
 

@@ -1,4 +1,4 @@
-﻿namespace SomeService
+﻿namespace InvoiceProcessingService
 {
     public class ToDo
     {

@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Quartz.Spi;
 
-namespace SomeService
+namespace InvoiceProcessingService
 {
     internal class Bootstrapper
     {
