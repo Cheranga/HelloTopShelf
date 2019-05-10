@@ -1,20 +1,28 @@
 ﻿using System;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace SomeService
 {
     public class InvoiceService
     {
-        public void OnStart()
+        private const string FilePath = @"D:\Cheranga\Temp\TestData.txt";
+        public async Task OnStart()
         {
-            Console.WriteLine("Started!");
-            //return Console.Out.WriteLineAsync("Started!");
+            using (var fileStream = new FileStream(FilePath, FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
+            {
+                using (var writer = new StreamWriter(fileStream){AutoFlush = true})
+                {
+                    await writer.WriteLineAsync($"{DateTime.UtcNow:HH:mm:ss} started");
+                }
+            }
         }
 
-        public void OnStop()
+        public Task OnStop()
         {
-            Console.WriteLine("Stopped!");
-            //return Console.Out.WriteLineAsync("Stopped!");
+            //Console.WriteLine("Stopped!");
+            File.Delete(FilePath);
+            return Task.CompletedTask;
         }
     }
 }

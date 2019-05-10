@@ -22,12 +22,12 @@ namespace SomeService
 
                     serviceConfigurator.WhenStarted((service, hostControl) =>
                     {
-                        service.OnStart();
+                        service.OnStart().Wait();
                         return true;
                     });
                     serviceConfigurator.WhenStopped((service, hostControl) =>
                     {
-                        service.OnStop();
+                        service.OnStop().Wait();
                         return true;
                     });
                 });
