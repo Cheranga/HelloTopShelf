@@ -21,7 +21,7 @@ namespace SomeService
             scheduler.JobFactory = _jobFactory;
             scheduler.Start().Wait();
 
-            var jobDetails = JobBuilder.Create<SomeJob>()
+            var jobDetails = JobBuilder.Create<InvoiceProcessingJob>()
                 .WithIdentity(JobKey.Create("Invoice processing", "Document processing"))
                 .Build();
 
@@ -40,7 +40,7 @@ namespace SomeService
 
         public void OnStop()
         {
-            File.Delete(SomeJob.FilePath);
+            File.Delete(InvoiceProcessingJob.FilePath);
         }
     }
 }

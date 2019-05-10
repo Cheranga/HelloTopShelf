@@ -10,10 +10,10 @@ namespace SomeService
         {
             services.AddSingleton<IJobFactory>(provider =>
             {
-                var jobFactory = new SomeJobFactory(provider);
+                var jobFactory = new JobFactory(provider);
                 return jobFactory;
             });
-            services.AddSingleton<SomeJob>();
+            services.AddSingleton<InvoiceProcessingJob>();
 
             services.AddSingleton<ITodoRepository, TodoRepository>();
 

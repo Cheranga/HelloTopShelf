@@ -6,13 +6,13 @@ using Quartz;
 
 namespace SomeService
 {
-    public class SomeJob : IJob
+    public class InvoiceProcessingJob : IJob
     {
         internal const string FilePath = @"D:\Cheranga\Temp\TestData.txt";
         private readonly ITodoApiClient _client;
         private readonly ITodoRepository _repository;
 
-        public SomeJob(ITodoApiClient client, ITodoRepository repository)
+        public InvoiceProcessingJob(ITodoApiClient client, ITodoRepository repository)
         {
             _client = client;
             _repository = repository;

@@ -5,11 +5,11 @@ using Quartz.Spi;
 
 namespace SomeService
 {
-    public class SomeJobFactory : IJobFactory
+    public class JobFactory : IJobFactory
     {
         private readonly IServiceProvider _provider;
 
-        public SomeJobFactory(IServiceProvider provider)
+        public JobFactory(IServiceProvider provider)
         {
             _provider = provider;
         }
