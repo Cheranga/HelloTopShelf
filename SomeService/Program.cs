@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Runtime.InteropServices.ComTypes;
 using Microsoft.Extensions.DependencyInjection;
+using Quartz;
+using Quartz.Spi;
 using Topshelf;
 
 namespace SomeService
@@ -10,6 +12,15 @@ namespace SomeService
         static void Main(string[] args)
         {
             var services = new ServiceCollection();
+
+            services.AddSingleton<IJobFactory>(provider =>
+            {
+                var jobFactory = new SomeJobFactory(provider);
+                return jobFactory;
+            });
+            services.AddSingleton<SomeJob>();
+
+
             services.AddHttpClient<ITodoApiClient, TodoApiClient>();
 
             var serviceProvider = services.BuildServiceProvider();
@@ -25,8 +36,8 @@ namespace SomeService
 
                 configurator.Service<InvoiceService>(serviceConfigurator =>
                 {
-                    var client = serviceProvider.GetRequiredService<ITodoApiClient>();
-                    serviceConfigurator.ConstructUsing(() => new InvoiceService(client));
+                    var jobFactory = serviceProvider.GetRequiredService<IJobFactory>();
+                    serviceConfigurator.ConstructUsing(() => new InvoiceService(jobFactory));
 
                     serviceConfigurator.WhenStarted((service, hostControl) =>
                     {
