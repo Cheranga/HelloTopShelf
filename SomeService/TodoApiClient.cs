@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 namespace SomeService
 {
     public class TodoApiClient : ITodoApiClient
-    {   
+    {
         private readonly HttpClient _client;
 
         public TodoApiClient(HttpClient client)

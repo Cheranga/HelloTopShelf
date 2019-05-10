@@ -1,29 +1,16 @@
-﻿using System;
-using System.Runtime.InteropServices.ComTypes;
-using Microsoft.Extensions.DependencyInjection;
-using Quartz;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Quartz.Spi;
 using Topshelf;
 
 namespace SomeService
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             var services = new ServiceCollection();
 
-            services.AddSingleton<IJobFactory>(provider =>
-            {
-                var jobFactory = new SomeJobFactory(provider);
-                return jobFactory;
-            });
-            services.AddSingleton<SomeJob>();
-
-
-            services.AddHttpClient<ITodoApiClient, TodoApiClient>();
-
-            var serviceProvider = services.BuildServiceProvider();
+            var serviceProvider = Bootstrapper.GetServiceProvider(services);
 
 
             HostFactory.Run(configurator =>
