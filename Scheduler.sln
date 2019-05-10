@@ -10,7 +10,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProcessInvoiceService", "ProcessInvoiceService\ProcessInvoiceService.csproj", "{5BC80FAC-C96C-495D-B77E-C8EB9E54A59A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuartzConsole", "QuartzConsole\QuartzConsole.csproj", "{677E4616-C23C-410E-8EA7-5B7AEE886E89}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuartzConsole", "QuartzConsole\QuartzConsole.csproj", "{677E4616-C23C-410E-8EA7-5B7AEE886E89}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SomeService", "SomeService\SomeService.csproj", "{E85F201A-888C-4BAB-BDA8-2C62A7C0B6B2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,6 +28,10 @@ Global
 		{677E4616-C23C-410E-8EA7-5B7AEE886E89}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{677E4616-C23C-410E-8EA7-5B7AEE886E89}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{677E4616-C23C-410E-8EA7-5B7AEE886E89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E85F201A-888C-4BAB-BDA8-2C62A7C0B6B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E85F201A-888C-4BAB-BDA8-2C62A7C0B6B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E85F201A-888C-4BAB-BDA8-2C62A7C0B6B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E85F201A-888C-4BAB-BDA8-2C62A7C0B6B2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
