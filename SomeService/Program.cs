@@ -30,12 +30,12 @@ namespace SomeService
 
                     serviceConfigurator.WhenStarted((service, hostControl) =>
                     {
-                        service.OnStart().Wait();
+                        service.OnStart();
                         return true;
                     });
                     serviceConfigurator.WhenStopped((service, hostControl) =>
                     {
-                        service.OnStop().Wait();
+                        service.OnStop();
                         return true;
                     });
                 });
