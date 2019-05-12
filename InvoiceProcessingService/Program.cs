@@ -24,6 +24,7 @@ namespace InvoiceProcessingService
                 configurator.Service<InvoiceService>(serviceConfigurator =>
                 {
                     var jobFactory = serviceProvider.GetRequiredService<IJobFactory>();
+
                     serviceConfigurator.ConstructUsing(() => new InvoiceService(jobFactory));
 
                     serviceConfigurator.WhenStarted((service, hostControl) =>

@@ -33,5 +33,10 @@ namespace InvoiceProcessingService
 
             return todos;
         }
+
+        public void Dispose()
+        {
+            _client?.Dispose();
+        }
     }
 }

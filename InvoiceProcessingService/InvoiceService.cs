@@ -1,10 +1,45 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
+using System.Linq;
 using Quartz;
 using Quartz.Impl;
 using Quartz.Spi;
 
 namespace InvoiceProcessingService
 {
+    public class AnotherInvoiceService
+    {
+        private readonly ITodoApiClient _client;
+        private readonly ITodoRepository _repository;
+
+        public AnotherInvoiceService(ITodoApiClient client, ITodoRepository repository)
+        {
+            _client = client;
+            _repository = repository;
+        }
+
+        public void OnStart()
+        {
+            var tasks = _client.GetTodosAsync().Result;
+            if (tasks == null || !tasks.Any())
+            {
+                return;
+            }
+
+            var status = _repository.UpsertTodoItemsAsync(tasks).Result;
+
+            if (!status)
+            {
+                throw new Exception("Cannot insert/update tasks");
+            }
+        }
+
+        public void OnStop()
+        {
+            
+        }
+    }
+
     public class InvoiceService
     {
         private readonly IJobFactory _jobFactory;
