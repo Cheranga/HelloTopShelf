@@ -58,13 +58,27 @@ The above are the pre-requisites which you need to do have dependency injection 
 private static IConfigurationRoot GetConfiguration()
 {
     var configuration = new ConfigurationBuilder()
-        .SetBasePath(Directory.GetCurrentDirectory())
+        //.SetBasePath(Directory.GetCurrentDirectory())
+        .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
         .AddJsonFile("appsettings.json")
         .Build();
 
     return configuration;
 }
 ```
+
+__IMPORTANT__
+* There is a contextual difference between using `Directory.GetCurrentDirectory` and using `System.AppDomain.CurrentDomain.BaseDirectory`.
+  * `System.AppDomain.CurrentDirectory` - Always represents an app domain. Hence it will always return the path where the exe/dll is located.
+  * `Directory.GetCurrentDirectory` - By looking under the hood of this method it's clear that it returns the `Environment.CurrentDirectory`. Hence it will return a value which is "specific" to the platform or the environment and, this value can change overtime as well.
+  * References
+    * https://stackoverflow.com/questions/674857/should-i-use-appdomain-currentdomain-basedirectory-or-system-environment-current
+    * https://www.c-sharpcorner.com/UploadFile/370e35/basedirectory-vs-currentdirectory-in-C-Sharp/ 
+
+
+
+
+  
 
 * Then load the configuration data and register them as a dependency.
 
